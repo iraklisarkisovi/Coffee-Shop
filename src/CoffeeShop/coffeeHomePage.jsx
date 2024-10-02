@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
+import Header from './Components/Header';
+import CoffeeHomePageList from './coffeeHomePageList';
 
 const CoffeeHomePage = () => {
     return (
         <>
-            <h1>Main page</h1>
+        <Header/>
+
+
+     
         </>
     )
 }
