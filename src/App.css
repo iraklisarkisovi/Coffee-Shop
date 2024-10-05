@@ -95,7 +95,7 @@ a{
     background-repeat: no-repeat;
     background-position: center;
     background-size: 270px;
-    display: none;
+ 
 }
 
 .buttons{
@@ -110,3 +110,36 @@ a{
     display: flex;
 }
 
+.closed{
+    margin-top: 10px;
+    display: none;
+}
+
+.opened{ 
+    display: block;
+}
+
+.opened button{
+    margin-top: 10px;
+}
+
+.mainButtons{
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+}
+
+.ull li{
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.Btncontainer{
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+}
+
+.Btncontainer button{
+    margin-left: 10px;
+}

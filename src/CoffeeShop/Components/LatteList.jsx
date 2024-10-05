@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const CoffeeHomePageList = ({ Status, Remove, id }) => {
+const LatteList = ({ Status, Remove, id, name }) => {
   const [statuss, setStatus] = useState(!Status);  
-  const [ingredients, setIngredients] = useState([]);  
+  const [ingredients, setIngredients] = useState(['sugar','Coffee','Milk','Ice','Chocolate Syrup','Vanilla Syrup','Cream','Water']);  
 
 
   const toggleStatus = () => {
@@ -24,7 +24,7 @@ const CoffeeHomePageList = ({ Status, Remove, id }) => {
       <div className='coffeeRedact'> 
 
         <div className={ingredients.length > 0 ? 'filled-cup' : 'empty-cup'}></div>
-        <h3>{ingredients.length > 0 ? 'Cup of coffee' : 'Empty cup of coffee'}</h3>
+        <h3>{name}</h3>
 
         <div>
           <strong>Ingredients:</strong>
@@ -57,9 +57,6 @@ const CoffeeHomePageList = ({ Status, Remove, id }) => {
             <button onClick={() => toggleIngredient('Milk')}>
               {ingredients.includes('Milk') ? '- Milk' : '+ Milk'}
             </button>
-            <button onClick={() => toggleIngredient('Ice')}>
-              {ingredients.includes('Ice') ? '- Ice' : '+ Ice'}
-            </button>
             <button onClick={() => toggleIngredient('Chocolate Syrup')}>
               {ingredients.includes('Chocolate Syrup') ? '- Chocolate Syrup' : '+ Chocolate Syrup'}
             </button>
@@ -68,9 +65,6 @@ const CoffeeHomePageList = ({ Status, Remove, id }) => {
             </button>
             <button onClick={() => toggleIngredient('Cream')}>
               {ingredients.includes('Cream') ? '- Cream' : '+ Cream'}
-            </button>
-            <button onClick={() => toggleIngredient('Ice cream')}>
-              {ingredients.includes('Ice cream') ? '- Ice cream' : '+ Ice cream'}
             </button>
             <button onClick={() => toggleIngredient('Water')}>
               {ingredients.includes('Water') ? '- Water' : '+ Water'}
@@ -82,4 +76,4 @@ const CoffeeHomePageList = ({ Status, Remove, id }) => {
   );
 };
 
-export default CoffeeHomePageList;
+export default LatteList;
