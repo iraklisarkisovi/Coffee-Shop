@@ -3,116 +3,63 @@ import CoffeeHomePageList from '../coffeeHomePageList';
 import CapuccinoList from './CapuccinoList';
 import Icedcoffee from './IcedCoffee';
 import LatteList from './LatteList';
+import { useCoffee } from '../../API';
+import { Link } from 'react-router-dom';
+
+const coffeeTypes = [
+  { name: 'Capuccino', Component: CapuccinoList },
+  { name: 'Iced Coffee', Component: Icedcoffee },
+  { name: 'Latte', Component: LatteList }
+];
 
 function Header() {
-    const [coffee, setCoffee] = useState([]);
-    const [capuccino, setCapuccino] = useState([]);
-    const [icedcoffee, setIcedcoffee] = useState([]);
-    const [latte, setLatte] = useState([])
-    
+  const [coffee, setCoffee] = useState([]);
+  const { RemoveCoffee, coffeeList, GetCoffees, onFormSubmit, toggleComplete, deleteCoffees } = useCoffee();
 
-    const onClickLatte = () => {
-        const newLatte = { id: latte.length + 1, status: false, name: 'Latte'};
-        setLatte([...latte, newLatte]);
-    }
+  const addCoffee = (type) => {
+    const newCoffee = { id: coffee.length + 1, status: false, name: type };
+    setCoffee([...coffee, newCoffee]);
+  };
 
-    const removeLatte = (id) => {
-        setLatte(latte.filter(lattee => lattee.id !== id))
-    }
+  const removeCoffee = (id) => {
+    setCoffee(coffee.filter(coff => coff.id !== id));
+  };
 
-    const onClickCapuccino = () => {
-        const newCapuccino = { id: capuccino.length + 1, status: false, name: 'Capuccino'};
-        setCapuccino([...capuccino, newCapuccino]);
-    }
-
-    const removeIced = (id) => {
-        setIcedcoffee(icedcoffee.filter(iced => iced.id !== id))
-    }
-
-    const onClickIcecoffee = (id) => {
-        const newIcecoffee = { id: icedcoffee.length + 1, status: false, name: 'Iced Coffee'};
-        setIcedcoffee([...icedcoffee, newIcecoffee]);
-    }
-    
-    const removeCapuccino = (id) => {
-        setCapuccino(capuccino.filter(capuccinoo => capuccinoo.id !== id))
-    }
-
-    const onClick = () => {
-        const newCoffee = { id: coffee.length + 1, status: false };
-        setCoffee([...coffee, newCoffee]);  
-    };
-
-    const RemoveCoffee = (id) => {
-        setCoffee(coffee.filter(coff => coff.id !== id))
-    }
-
-    return (
-        <>
-            <header>
-                <a href="#">
-                    <div className='container'>
-                        <img src="https://www.freepnglogos.com/uploads/coffee-logo-png/coffee-logo-logo-elements-logo-objects-3.png" alt="Coffee" className='logo'/>
-                        <h2>Welcome to Coffee Shop</h2>
-                    </div>
-                </a>
-                <div className='Btncontainer'>
-                    <button onClick={onClick}>+ Add Coffee</button>
-                    <div className='hiddenButtons'>
-                        <button onClick={onClickCapuccino}>+ Capuccino</button>
-                        <button onClick={onClickIcecoffee}>+ Iced coffee</button>
-                        <button onClick={onClickLatte}>+ Latte</button>
-                    </div>
-                </div>
-            </header>
-            <div className='contain'>
-                {coffee.map((coffees) => (
-                    <CoffeeHomePageList 
-                        key={coffees.id}
-                        id={coffees.id}
-                        Status={coffees.status}
-                        Remove={RemoveCoffee}/>
-                        
+  return (
+    <>
+      <header>
+        <div className='container'>
+          <img src="https://www.freepnglogos.com/uploads/coffee-logo-png/coffee-logo-logo-elements-logo-objects-3.png" alt="Coffee" className='logo'/>
+          <h2>Welcome to Coffee Shop</h2>
+        </div>
+        <div className='Btncontainer'>
+          <button onClick={() => addCoffee('Empty Cup')}>+ Add empty cup</button>
+          <div className='btnss'>
+            <div className='hiddenButtons'>
+                {coffeeTypes.map(({ name }) => (
+                <button key={name} onClick={() => addCoffee(name)}>+ {name}</button>
                 ))}
-
-                {capuccino.map((capuccinoCoffee) => {
-                    return(
-                    <CapuccinoList
-                        key={capuccinoCoffee.id}
-                        id={capuccinoCoffee.id}
-                        Status={capuccinoCoffee.status}
-                        Remove={removeCapuccino}
-                        name={capuccinoCoffee.name}
-                    />
-                    )
-                })}
-
-                {icedcoffee.map((iced) => {
-                    return(
-                    <Icedcoffee
-                        key={iced.id}
-                        id={iced.id}
-                        Status={iced.status}
-                        Remove={removeIced}
-                        name={iced.name}
-                    />
-                    )
-                })}
-
-                {latte.map((lattee) => {
-                    return(
-                    <LatteList
-                        key={lattee.id}
-                        id={lattee.id}
-                        Status={lattee.status}
-                        Remove={removeLatte}
-                        name={lattee.name}
-                    />
-                    )
-                })}
             </div>
-        </>
-    );
+            <Link to={'/About'} className='link'>About us</Link> 
+          </div>
+        </div>
+      </header>
+      <div className='contain'>
+        {coffee.map(({ id, status, name }) => {
+          const CoffeeComponent = coffeeTypes.find(type => type.name === name)?.Component || CoffeeHomePageList;
+          return (
+            <CoffeeComponent
+              key={id}
+              id={id}
+              Status={status}
+              Remove={removeCoffee}
+              name={name}
+            />
+          );
+        })}
+      </div>
+    </>
+  );
 }
 
 export default Header;
